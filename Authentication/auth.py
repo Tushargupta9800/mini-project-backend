@@ -7,7 +7,6 @@ from flask import session, jsonify
 import bcrypt
 import json
 
-
 def error_handler_register(data):
 
     checkList = ['email', 'name', 'state', 'city', 'password', 'interests']
@@ -35,6 +34,17 @@ def error_handler_login(data):
 
 def check_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password, hashed_password)
+
+def createVoteId(id, db):
+    collection = db['Vote']
+
+    voteId = collection.insert({
+        "user_id" : id,
+        "upvotes" : [],
+        "downvotes" : []
+    })
+
+    return voteId
 
 def Login_User(data):
     
@@ -82,16 +92,23 @@ def Register_User(data):
     existing_user = collection.find_one({'email' : data['email']})
 
     if existing_user is None:
-        hashpass = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
 
-        collection.insert({
+        hashpass = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+        userId = collection.insert({
             "email" : data['email'],
             "password" : hashpass,
             "state" : data['state'],
             "city" : data['city'],
             "name" : data['name'],
             "interests" : data['interests']
-            })
+        })
+
+        voteId = createVoteId(userId, db)
+
+        filter = {"_id" : userId}
+        newField = {"$set": { 'voteId': voteId } }
+
+        collection.update_one(filter, newField)
 
         to_return = {"error" : "Success", "message" : "Register Completed"}
         return jsonify(to_return)
