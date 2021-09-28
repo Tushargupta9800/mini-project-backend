@@ -1,0 +1,9 @@
+{
+    "_id" : "auto formed does not need to provided by user",
+    "name" : "Tushar Gupta",
+    "email" : "email-id",
+    "password" : "password will provided by the user but it will stored as a hash map with salt",
+    "state" : "Uttar Pradesh",
+    "city" : "Aligarh",
+    "interestes" : ["Politics", "Entertainment", "Science"]
+}
