@@ -1,5 +1,6 @@
 from enum import unique
 from os import name
+from typing import Sized
 from pymongo import MongoClient
 from models.newsModel import NewsAPIModel, NewsModel
 from Secrets.Keys import GeneralNewsEndPoint, MongoClientId
@@ -28,7 +29,7 @@ def Get_General_News(n):
         # print(e)
         pass
 
-    cursor = collection.find().limit(n)
+    cursor = collection.find().sort('published_at', -1).limit(n)
 
     finalList = []
     for news in cursor:
