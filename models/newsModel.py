@@ -8,7 +8,7 @@ class NewsAPIModel:
         self.published_at = data['publishedAt']
         self.news_url = data['url']
         self.img_url = data['urlToImage']
-        self.keyword = "Aligarh"
+        self.keyword = ["Politics"]
         self.fake_percentage = 0.00
         self.upvotes = 0
         self.downvotes = 0
