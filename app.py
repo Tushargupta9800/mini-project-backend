@@ -28,6 +28,7 @@ def hello_world(strx):
 
 @app.route('/app/next', methods=['GET'])
 def returnN():
+    data = "tushar"
     return hello()
 
 @app.route('/api', methods=['GET'])
