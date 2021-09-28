@@ -1,11 +1,9 @@
-from models.user import user
+from models.userModel import user
 from Secrets.Keys import MongoClientId
 from typing import List
-import pymongo
 from pymongo import MongoClient
-from flask import session, jsonify
+from flask import jsonify
 import bcrypt
-import json
 
 def error_handler_register(data):
 
@@ -13,7 +11,6 @@ def error_handler_register(data):
     
     for check in checkList:
         if check not in data:
-            print(check)
             return False
 
     if type(data['interests']) != List and len(data['interests']) == 0:
@@ -32,9 +29,6 @@ def error_handler_login(data):
     
     return True
 
-def check_password(plain_text_password, hashed_password):
-    return bcrypt.checkpw(plain_text_password, hashed_password)
-
 def createVoteId(id, db):
     collection = db['Vote']
 
@@ -45,6 +39,9 @@ def createVoteId(id, db):
     })
 
     return voteId
+
+def check_password(plain_text_password, hashed_password):
+    return bcrypt.checkpw(plain_text_password, hashed_password)
 
 def Login_User(data):
     
@@ -70,7 +67,9 @@ def Login_User(data):
                 "key" : str(user_exists.get('_id')),
                 "data" : User.__dict__
                 }
+
             return jsonify(to_return)
+
         else:
             to_return = {"error" : "Email or Password is wrong"}
             return jsonify(to_return)
@@ -84,7 +83,6 @@ def Register_User(data):
         to_return = {"error" : "Fill Every Field"}
         return jsonify(to_return)
 
-
     cluster = MongoClient(MongoClientId)
     db = cluster['UserProfileDatabase']
     collection = db['user']
@@ -94,6 +92,7 @@ def Register_User(data):
     if existing_user is None:
 
         hashpass = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+
         userId = collection.insert({
             "email" : data['email'],
             "password" : hashpass,
