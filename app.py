@@ -1,3 +1,4 @@
+from GetNews.Votes import allUserVotes
 from GetNews.oneNews import getOneNews, oneNewsDownvote, oneNewsUpvote
 from GetNews.News import Get_General_News, Get_Specific_News
 from Authentication.auth import Login_User, Register_User
@@ -32,6 +33,9 @@ def UpvoteNews():
 def DownvoteNews():
     return oneNewsDownvote(data = request.get_json())
 
+@app.route('/user/all/votes/<string:n>', methods=['GET'])
+def allVotes(n):
+    return allUserVotes(data=n)
 
 if __name__ == '__main__':
     app.run(debug = True)

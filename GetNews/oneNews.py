@@ -1,4 +1,3 @@
-
 from logging import fatal
 from models.newsModel import NewsModel
 from bson.objectid import ObjectId
@@ -55,7 +54,7 @@ def oneNewsUpvote(data):
 
         collection.update_one(filter, newField)
     except Exception as e:
-        to_return = {"error" : "Error"}
+        to_return = {"error" : "Error Try Again"}
         return jsonify(to_return)
 
     to_return = {"error" : "Success"}
@@ -85,9 +84,9 @@ def oneNewsDownvote(data):
         newField = {"$inc" : {"downvotes" : 1}}
 
         collection.update_one(filter, newField)
-        
+
     except Exception as e:
-        to_return = {"error" : "Error"}
+        to_return = {"error" : "Error Try Again"}
         return jsonify(to_return)
 
     to_return = {"error" : "Success"}
