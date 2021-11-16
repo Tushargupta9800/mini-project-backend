@@ -55,6 +55,7 @@ def Login_User(data):
 
     user_exists = collection.find_one({'email' : data['email']})
 
+
     if user_exists:
         encodedPass = data['password'].encode('utf-8')
         if check_password(encodedPass, user_exists['password']):
