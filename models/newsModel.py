@@ -1,5 +1,7 @@
 import hashlib
 
+from FakeNewsDetection.trainModel import manual_testing
+
 class NewsAPIModel:
     def __init__(self, data):
         self._id = hashlib.sha256(data['url'].encode('utf-8')).hexdigest()
@@ -9,7 +11,7 @@ class NewsAPIModel:
         self.news_url = data['url']
         self.img_url = data['urlToImage']
         self.keyword = ["Politics"]
-        self.fake_percentage = 0.00
+        self.fake_percentage = manual_testing(data['title'] + data['description'])*6;
         self.upvotes = 0
         self.downvotes = 0
 

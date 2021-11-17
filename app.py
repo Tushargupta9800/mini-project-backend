@@ -1,3 +1,5 @@
+from flask.json import jsonify
+from FakeNewsDetection.trainModel import train
 from GetNews.Votes import allUserVotes
 from GetNews.oneNews import getOneNews, oneNewsDownvote, oneNewsUpvote
 from GetNews.News import Get_General_News, Get_Specific_News
@@ -36,6 +38,14 @@ def DownvoteNews():
 @app.route('/user/all/votes/<string:n>', methods=['GET'])
 def allVotes(n):
     return allUserVotes(data=n)
+
+@app.route('/train/model', methods = ['GET'])
+def trainModel():
+    train();
+    to_return = {
+        "message" : "Training Dataset"
+    }
+    return jsonify(to_return)
 
 if __name__ == '__main__':
     app.run(debug = True)
