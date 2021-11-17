@@ -16,7 +16,7 @@ def NewsIdExsists(data, id):
         if idx == id:
             return 2
     
-    return 3
+    return 0
 
 def getOneNews(n):
     cluster = MongoClient(MongoClientId)
@@ -34,10 +34,9 @@ def getFakePercentage(data, name):
     upvotes = data['upvotes']
     downvotes = data['downvotes']
     if name == 0:
-        upvotes += 1
+        upvotes = upvotes + 1
     else:
-        downvotes += 1
-    
+        downvotes = downvotes + 1
     percent = (downvotes)/(upvotes + downvotes)
     percent *= 76
     return percent
