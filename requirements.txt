@@ -5,3 +5,5 @@ gunicorn
 bcrypt
 dnspython
 requests
+pandas
+scikit-learn
